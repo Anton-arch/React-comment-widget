@@ -5,13 +5,24 @@ class App extends React.Component {
     constructor() {
         super()
 
+        if(!localStorage.getItem('state')) {
+            localStorage.setItem('state', JSON.stringify([]))
+        }
+        
         this.state = {
-            comments: [],
-            newComment: ''
+            comments: localStorage.getItem('state'),
         }
     }
 
+    // addCommetToLocalStorage() {
+
+    // }
+
     render() {
+        let commentsArr;
+        let name;
+        let commentText;
+
         return (
             <div>
                 <form
@@ -31,6 +42,9 @@ class App extends React.Component {
                         className='input'
                         type='text'
                         id='name'
+                        onInput={event => {
+                            name = event.currentTarget.value;
+                        }}
                     ></input>
                     <label
                         className='label'
@@ -42,13 +56,28 @@ class App extends React.Component {
                         className='textarea'
                         type='text'
                         id='textarea'
+                        onInput={event => {
+                            commentText = event.currentTarget.value;
+                        }}
                     ></textarea>
 
                     <button
                         className='button'
                         onClick={ev => {
-                            ev.preventDefault()
+                                ev.preventDefault()
 
+                                commentsArr = JSON.parse(localStorage.getItem('state'));
+
+                                commentsArr.push({
+                                    name,
+                                    commentText,
+                                })
+
+                                localStorage.setItem('state', JSON.stringify(commentsArr))
+
+                                this.setState({ comments: JSON.parse(localStorage.getItem('state')) })
+
+                                console.log(this.state.comments)
                             }
                         }
                     >
