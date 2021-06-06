@@ -4,19 +4,17 @@ import Comment from './comment'
 class App extends React.Component {
     constructor() {
         super()
-
-        if(!localStorage.getItem('state')) {
-            localStorage.setItem('state', JSON.stringify([]))
-        }
         
         this.state = {
-            comments: localStorage.getItem('state'),
+            comments: localStorage.getItem('state') ? JSON.parse(localStorage.getItem('state')) : [],
         }
     }
 
-    // addCommetToLocalStorage() {
-
-    // }
+    deleteCommnet(key) {
+        const comments = this.state.comments.map((comment, i) => {
+        console.log(comments)
+        });
+    }
 
     render() {
         let commentsArr;
@@ -28,8 +26,24 @@ class App extends React.Component {
                 <form
                     className='form'
                     onSubmit={ev => {
-                        ev.preventDefault()
-                        }
+                                ev.preventDefault()
+
+                                commentsArr = this.state.comments;
+                                const date = new Date().toUTCString();
+
+                                commentsArr.push({
+                                    name,
+                                    commentText,
+                                    date,
+                                });
+
+                                this.setState({ comments: commentsArr });
+
+                                localStorage.setItem('state', JSON.stringify(this.state.comments));
+
+                                document.querySelector('.input').value = '';
+                                document.querySelector('.textarea').value = '';
+                            }
                     }
                 >
                     <label
@@ -42,9 +56,7 @@ class App extends React.Component {
                         className='input'
                         type='text'
                         id='name'
-                        onInput={event => {
-                            name = event.currentTarget.value;
-                        }}
+                        onInput={event => name = event.currentTarget.value}
                     ></input>
                     <label
                         className='label'
@@ -56,43 +68,33 @@ class App extends React.Component {
                         className='textarea'
                         type='text'
                         id='textarea'
-                        onInput={event => {
-                            commentText = event.currentTarget.value;
-                        }}
+                        onInput={event => commentText = event.currentTarget.value}
                     ></textarea>
 
                     <button
                         className='button'
-                        onClick={ev => {
-                                ev.preventDefault()
-
-                                commentsArr = JSON.parse(localStorage.getItem('state'));
-
-                                commentsArr.push({
-                                    name,
-                                    commentText,
-                                })
-
-                                localStorage.setItem('state', JSON.stringify(commentsArr))
-
-                                this.setState({ comments: JSON.parse(localStorage.getItem('state')) })
-
-                                console.log(this.state.comments)
-                            }
-                        }
                     >
                         Добавить комментарий
                     </button>
                 </form>
 
                 <ul
-                    className='commet-list'
+                    className='comment-list'
                 >
-                    <li
-                        className='comment-item'
-                    >
-                        
-                    </li>
+                    {
+                        this.state.comments.map((comment, i) => {
+
+                            return(
+                                <Comment 
+                                    key={i}
+                                    name={comment.name}
+                                    commentText={comment.commentText}
+                                    date={comment.date}
+                                    deleteCommnet={this.deleteCommnet.bind(this, i)}
+                                />
+                            );
+                        })
+                    }
                 </ul>
             </div>
         )

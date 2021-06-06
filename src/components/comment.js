@@ -4,14 +4,21 @@ import React from 'react';
 //это то что функционального компонента нет своего состояния он представляет собой pure function - это функция
 //которая всегда возвращает один и тот же результат в зависимости от тех параметров которые ей передали)
 const Comment = (props) => {
-    console.log(props);
+
+    const className = 'comment-item'; 
 
     return (
         <li 
-            className={className}
-            onClick={props.toggleTodo}
+            className={className} 
         >
-            {props.name}
+            <p><b>Автор: {props.name}</b></p>
+            <p>Комментарий: {props.commentText}</p>
+            <p>Дата: {props.date}</p>
+            <button 
+                    className="delete-comment" 
+                    title="удалить" 
+                    onClick={props.deleteCommnet}
+            >x</button>
         </li>
     );
 }

@@ -1,3 +1,7 @@
+p {
+    max-width: 400px;
+}
+
 .form {
     margin: 0 auto;
     border-bottom: 1px solid red;
@@ -43,10 +47,37 @@
     filter: drop-shadow(0 0 0 transparent);
 }
 
-.commet-list {
+.comment-list {
     padding: 10px;
     margin: 0 auto;
     max-width: 500px;
     width: 100%;
     list-style-type: none;
+}
+
+.comment-item {
+    position: relative;
+    margin-bottom: 10px;
+    border: 1px dotted currentColor;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.delete-comment {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    color: red;
+    background: transparent;
+    filter: drop-shadow(5px 5px 2px currentColor);
+    transition: filter .1s linear;
+}
+
+.delete-comment:active {
+    filter: drop-shadow(0 0 0 transparent);
 }
