@@ -9,10 +9,12 @@ class App extends React.Component {
             comments: localStorage.getItem('state') ? JSON.parse(localStorage.getItem('state')) : [],
         }
     }
-
-    deleteCommnet(key) {
-        const comments = this.state.comments.map((comment, i) => {
-        console.log(comments)
+    
+    deleteComment(key) {
+        let currentCommentsArr = this.state.comments.filter((comment, i) => i !== key);
+        localStorage.setItem('state', JSON.stringify(currentCommentsArr));
+        this.setState({
+            comments: currentCommentsArr
         });
     }
 
@@ -90,7 +92,7 @@ class App extends React.Component {
                                     name={comment.name}
                                     commentText={comment.commentText}
                                     date={comment.date}
-                                    deleteCommnet={this.deleteCommnet.bind(this, i)}
+                                    deleteComment={this.deleteComment.bind(this, i)}
                                 />
                             );
                         })

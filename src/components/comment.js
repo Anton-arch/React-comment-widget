@@ -17,7 +17,7 @@ const Comment = (props) => {
             <button 
                     className="delete-comment" 
                     title="удалить" 
-                    onClick={props.deleteCommnet}
+                    onClick={props.deleteComment}
             >x</button>
         </li>
     );
